@@ -1,0 +1,55 @@
+// Styling for admin area of WordPress
+
+// Hide small group date filter
+.post-type-iv_small_group #filter-by-date {
+	display: none;
+}
+
+// Style added content types within "At a Glance" section of Dashboard
+#dashboard_right_now {
+
+	// Icon for small group post count
+	.iv_small_group-count {
+		a, span {
+			&:before {
+				// "group" dashicon
+				content: '\f307';
+			}
+		}
+	}
+
+	// Icon for Cyclone Slider post count
+	.cycloneslider-count {
+		a, span {
+			&:before {
+				// "format-gallery" dashicon
+				content: '\f161';
+			}
+		}
+	}
+
+}
+
+// Small group meta boxes
+#sg_details,
+#sg_contact,
+#iv_slider {
+	text-align: left;
+	// Ensure that labels and inputs are side-by-side
+	label,
+	input[type="text"],
+	select {
+		display: inline-block;
+		width: 60%;
+		margin: 0;
+		vertical-align: middle;
+	}
+	label {
+		display: inline-block;
+		width: 20%;
+		padding-right: 10px;
+		box-sizing: border-box;
+		font-weight: bold;
+		text-align: right;
+	}
+}
