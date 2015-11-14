@@ -160,6 +160,26 @@ class InterVarsity_Plugin {
 			)
 		) );
 
+		// Taxonomy for small group categories
+		$sg_category = new Awesome_Taxonomy( array(
+			'id'                    => 'sg_category',
+			'name'                  => array(
+				'singular'          => 'category',
+				'plural'            => 'categories'
+			),
+			'post_types'            => array( 'iv_small_group' ),
+			'filterable'            => true,
+			'args'                  => array(
+				'hierarchical'      => true,
+				'show_admin_column' => true,
+				'rewrite'           => array(
+					'slug'          => 'small-groups/category',
+					'hierarchical'  => true,
+					'with_front'    => false
+				)
+			)
+		) );
+
 	}
 
 	// Indicates if Cyclone Slider 2 plugin is installed and active
