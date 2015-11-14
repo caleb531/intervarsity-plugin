@@ -5,7 +5,7 @@ Plugin URI: https://github.com/caleb531/intervarsity-plugin
 Description: The InterVarsity plugin is a WordPress plugin intended for InterVarsity Christian Fellowship/USA chapters. It primarily allows you to create and manage small groups for any number of campuses. The plugin provides several fields for you to describe your small group, including time, location, leaders, and contact information. Other features of the plugin include a Facebook Like Button shortcode and integration with the Cyclone Slider 2 plugin for setting page sliders. Ultimately, the InterVarsity plugin provides an powerful yet intuitive backend for creating your InterVarsity chapter website.
 Author: Caleb Evans
 Author URI: http://calebevans.me/
-Version: 1.0.0
+Version: 2.0.0
 License: GNU General Public License v2.0
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
@@ -64,20 +64,6 @@ class InterVarsity_Plugin {
 
 	}
 
-	// Modifies small group permalinks to include campus term
-	public function modify_sg_permalink( $link, $post ) {
-
-		if ( 'iv_small_group' === $post->post_type ) {
-			$terms = get_the_terms( $post->ID, 'sg_campus' );
-			if ( ! empty( $terms ) ) {
-				// Evaluate %sg_campus% rewrite tag if small group has a campus
-				$link = str_replace( '%sg_campus%', current( $terms )->slug, $link );
-			}
-		}
-		return $link;
-
-	}
-
 	// Column populate functions
 
 	public function populate_sg_time( $post_id ) {
@@ -114,7 +100,7 @@ class InterVarsity_Plugin {
 				'has_archive'    => false,
 				'menu_icon'      => 'dashicons-groups',
 				'rewrite'        => array(
-					'slug'       => 'small-groups/%sg_campus%',
+					'slug'       => 'small-group',
 					'with_front' => false
 				)
 			)
@@ -147,28 +133,6 @@ class InterVarsity_Plugin {
 		// Remove Date column from small group post list, as date is irrelevant
 		// for small groups
 		$iv_small_group->remove_columns( array( 'date' ) );
-		// Modify small group permalinks
-		add_filter( 'post_type_link', array( $this, 'modify_sg_permalink' ), 10, 2 );
-
-	}
-
-	// Rewrites links to campus pages
-	public function rewrite_campus_link( $link, $term, $taxonomy ) {
-
-		$link = str_replace( 'sg_campus', 'small-groups', $link );
-		return $link;
-
-	}
-
-	// Rewrites titles for campus taxonomy pages
-	public function rewrite_campus_title( $title, $sep ) {
-
-		// Title for term pages should follow desired URL hierarchy
-		// (Small Groups > My Campus > My Small Group)
-		if ( is_tax( 'sg_campus' ) ) {
-			$title = str_replace( 'Campuses', 'Small Groups', $title );
-		}
-		return $title;
 
 	}
 
@@ -186,25 +150,35 @@ class InterVarsity_Plugin {
 			// Add campus filter dropdown to small group edit screen
 			'filterable'            => true,
 			'args'                  => array(
-				// Campuses technically shouldn't be nested, but marking them as
-				// hierarchical enables the checkbox interface when choosing a
-				// campus (as opposed to the tag-style interface)
 				'hierarchical'      => true,
 				'show_admin_column' => true,
 				'rewrite'           => array(
-					'slug'          => 'sg_campus',
+					'slug'          => 'small-groups/campus',
 					'hierarchical'  => true,
 					'with_front'    => false
 				)
 			)
 		) );
 
-		// Ensure paginated pages for campus terms work correctly
-		add_rewrite_rule( "small-groups/(.*?)/page/(\d+)/?$", 'index.php?sg_campus=$matches[1]&paged=$matches[2]', 'top' );
-		// Rewrite links to campus pages
-		add_filter( 'term_link', array( $this, 'rewrite_campus_link' ), 10, 3 );
-		// Rewrite titles for campus taxonomy pages
-		add_filter( 'wp_title', array( $this, 'rewrite_campus_title' ), 10, 2 );
+		// Taxonomy for small group categories
+		$sg_category = new Awesome_Taxonomy( array(
+			'id'                    => 'sg_category',
+			'name'                  => array(
+				'singular'          => 'category',
+				'plural'            => 'categories'
+			),
+			'post_types'            => array( 'iv_small_group' ),
+			'filterable'            => true,
+			'args'                  => array(
+				'hierarchical'      => true,
+				'show_admin_column' => true,
+				'rewrite'           => array(
+					'slug'          => 'small-groups/category',
+					'hierarchical'  => true,
+					'with_front'    => false
+				)
+			)
+		) );
 
 	}
 
