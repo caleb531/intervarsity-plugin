@@ -64,20 +64,6 @@ class InterVarsity_Plugin {
 
 	}
 
-	// Modifies small group permalinks to include campus term
-	public function modify_sg_permalink( $link, $post ) {
-
-		if ( 'iv_small_group' === $post->post_type ) {
-			$terms = get_the_terms( $post->ID, 'sg_campus' );
-			if ( ! empty( $terms ) ) {
-				// Evaluate %sg_campus% rewrite tag if small group has a campus
-				$link = str_replace( '%sg_campus%', current( $terms )->slug, $link );
-			}
-		}
-		return $link;
-
-	}
-
 	// Column populate functions
 
 	public function populate_sg_time( $post_id ) {
@@ -114,7 +100,7 @@ class InterVarsity_Plugin {
 				'has_archive'    => false,
 				'menu_icon'      => 'dashicons-groups',
 				'rewrite'        => array(
-					'slug'       => 'small-groups/%sg_campus%',
+					'slug'       => 'small-group',
 					'with_front' => false
 				)
 			)
@@ -147,28 +133,6 @@ class InterVarsity_Plugin {
 		// Remove Date column from small group post list, as date is irrelevant
 		// for small groups
 		$iv_small_group->remove_columns( array( 'date' ) );
-		// Modify small group permalinks
-		add_filter( 'post_type_link', array( $this, 'modify_sg_permalink' ), 10, 2 );
-
-	}
-
-	// Rewrites links to campus pages
-	public function rewrite_campus_link( $link, $term, $taxonomy ) {
-
-		$link = str_replace( 'sg_campus', 'small-groups', $link );
-		return $link;
-
-	}
-
-	// Rewrites titles for campus taxonomy pages
-	public function rewrite_campus_title( $title, $sep ) {
-
-		// Title for term pages should follow desired URL hierarchy
-		// (Small Groups > My Campus > My Small Group)
-		if ( is_tax( 'sg_campus' ) ) {
-			$title = str_replace( 'Campuses', 'Small Groups', $title );
-		}
-		return $title;
 
 	}
 
@@ -192,19 +156,12 @@ class InterVarsity_Plugin {
 				'hierarchical'      => true,
 				'show_admin_column' => true,
 				'rewrite'           => array(
-					'slug'          => 'sg_campus',
+					'slug'          => 'small-groups/campus',
 					'hierarchical'  => true,
 					'with_front'    => false
 				)
 			)
 		) );
-
-		// Ensure paginated pages for campus terms work correctly
-		add_rewrite_rule( "small-groups/(.*?)/page/(\d+)/?$", 'index.php?sg_campus=$matches[1]&paged=$matches[2]', 'top' );
-		// Rewrite links to campus pages
-		add_filter( 'term_link', array( $this, 'rewrite_campus_link' ), 10, 3 );
-		// Rewrite titles for campus taxonomy pages
-		add_filter( 'wp_title', array( $this, 'rewrite_campus_title' ), 10, 2 );
 
 	}
 
