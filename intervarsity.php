@@ -150,9 +150,6 @@ class InterVarsity_Plugin {
 			// Add campus filter dropdown to small group edit screen
 			'filterable'            => true,
 			'args'                  => array(
-				// Campuses technically shouldn't be nested, but marking them as
-				// hierarchical enables the checkbox interface when choosing a
-				// campus (as opposed to the tag-style interface)
 				'hierarchical'      => true,
 				'show_admin_column' => true,
 				'rewrite'           => array(
