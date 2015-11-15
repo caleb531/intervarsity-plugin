@@ -339,7 +339,7 @@ class InterVarsity_Plugin {
 				) );
 			}
 
-		} else if ( is_tax( 'sg_campus' ) ) {
+		} else if ( is_tax( 'sg_campus' ) || is_tax( 'sg_category' ) ) {
 
 			$term = get_queried_object();
 			// Add link for managing all small groups to admin bar
@@ -347,7 +347,7 @@ class InterVarsity_Plugin {
 				'id'     => 'edit-small-groups',
 				'title'  => 'Edit Small Groups',
 				'parent' => 'edit',
-				'href'   => home_url( "/wp-admin/edit.php?post_type=iv_small_group&sg_campus={$term->slug}" )
+				'href'   => home_url( "/wp-admin/edit.php?post_type=iv_small_group&{$term->taxonomy}={$term->slug}" )
 			) );
 
 		}
