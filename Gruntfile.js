@@ -12,7 +12,7 @@ module.exports = function(grunt) {
 			},
 			styles: {
 				files: {
-					'styles/css/admin.css': 'styles/sass/admin.scss',
+					'styles/css/admin.css': 'styles/sass/admin.scss'
 				}
 			}
 		},
@@ -37,7 +37,7 @@ module.exports = function(grunt) {
 			},
 			scripts: {
 				files: {
-					'scripts/facebook.min.js': 'scripts/facebook.js',
+					'scripts/facebook.min.js': 'scripts/facebook.js'
 				}
 			}
 		},
@@ -45,7 +45,7 @@ module.exports = function(grunt) {
 		watch: {
 			scripts: {
 				files: [
-					'scripts/facebook.js',
+					'scripts/facebook.js'
 				],
 				tasks: [
 					'uglify'
