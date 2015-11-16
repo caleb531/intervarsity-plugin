@@ -5,7 +5,7 @@ Plugin URI: https://github.com/caleb531/intervarsity-plugin
 Description: The InterVarsity plugin is a WordPress plugin intended for InterVarsity Christian Fellowship/USA chapters. It primarily allows you to create and manage small groups for any number of campuses. The plugin provides several fields for you to describe your small group, including time, location, leaders, and contact information. Other features of the plugin include a Facebook Like Button shortcode and integration with the Cyclone Slider 2 plugin for setting page sliders. Ultimately, the InterVarsity plugin provides an powerful yet intuitive backend for creating your InterVarsity chapter website.
 Author: Caleb Evans
 Author URI: http://calebevans.me/
-Version: 2.0.0
+Version: 2.1.0
 License: GNU General Public License v2.0
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
@@ -339,7 +339,7 @@ class InterVarsity_Plugin {
 				) );
 			}
 
-		} else if ( is_tax( 'sg_campus' ) ) {
+		} else if ( is_tax( 'sg_campus' ) || is_tax( 'sg_category' ) ) {
 
 			$term = get_queried_object();
 			// Add link for managing all small groups to admin bar
@@ -347,7 +347,7 @@ class InterVarsity_Plugin {
 				'id'     => 'edit-small-groups',
 				'title'  => 'Edit Small Groups',
 				'parent' => 'edit',
-				'href'   => home_url( "/wp-admin/edit.php?post_type=iv_small_group&sg_campus={$term->slug}" )
+				'href'   => home_url( "/wp-admin/edit.php?post_type=iv_small_group&{$term->taxonomy}={$term->slug}" )
 			) );
 
 		}
