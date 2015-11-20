@@ -422,7 +422,7 @@ class InterVarsity_Plugin {
 
 	}
 
-	// Extend small group search to include metadata
+	// Extends small group searches to recognize time, location, etc.
 	public function extend_sg_search( $search, &$wp_query ) {
 		global $wpdb;
 
@@ -492,7 +492,10 @@ class InterVarsity_Plugin {
 						ON `$wpdb->term_taxonomy`.`term_id` = `$wpdb->terms`.`term_id`
 						INNER JOIN `$wpdb->term_relationships`
 						ON `$wpdb->term_relationships`.`term_taxonomy_id` = `$wpdb->term_taxonomy`.`term_taxonomy_id`
-						WHERE `taxonomy` = 'sg_campus'
+						WHERE (
+							`taxonomy` = 'sg_campus'
+							OR `taxonomy` = 'sg_category'
+						)
 						AND `object_id` = `$wpdb->posts`.`ID`
 						AND `$wpdb->terms`.`name` REGEXP '$term_regex'
 				)
