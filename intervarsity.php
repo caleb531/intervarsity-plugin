@@ -33,7 +33,7 @@ class InterVarsity_Plugin {
 		add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_items' ), 0 );
 		add_filter( 'dashboard_glance_items', array( $this, 'add_post_types_to_dashboard' ), 10 );
 
-		add_filter( 'posts_search', array( $this, 'extend_sg_search'), 500, 2 );
+		add_filter( 'posts_search', array( $this, 'extend_sg_search' ), 500, 2 );
 
 	}
 
@@ -97,7 +97,7 @@ class InterVarsity_Plugin {
 				'menu_position'  => 20,
 				'hierarchical'   => false,
 				'supports'       => array( 'title', 'editor', 'thumbnail', 'revisions' ),
-				'has_archive'    => false,
+				'has_archive'    => 'small-groups/archive',
 				'menu_icon'      => 'dashicons-groups',
 				'rewrite'        => array(
 					'slug'       => 'small-group',
@@ -501,7 +501,6 @@ class InterVarsity_Plugin {
 				)
 			)";
 		}
-
 		return $search;
 	}
 
@@ -590,5 +589,4 @@ function the_sg_contact_email() {
 	global $post;
 	echo get_the_sg_contact_email( $post->ID );
 }
-
 $iv_plugin = new InterVarsity_Plugin();
