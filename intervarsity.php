@@ -5,7 +5,7 @@ Plugin URI: https://github.com/caleb531/intervarsity-plugin
 Description: The InterVarsity plugin is a WordPress plugin intended for InterVarsity Christian Fellowship/USA chapters. It primarily allows you to create and manage small groups for any number of campuses. The plugin provides several fields for you to describe your small group, including time, location, leaders, and contact information. Other features of the plugin include a Facebook Like Button shortcode and integration with the Cyclone Slider 2 plugin for setting page sliders. Ultimately, the InterVarsity plugin provides an powerful yet intuitive backend for creating your InterVarsity chapter website.
 Author: Caleb Evans
 Author URI: http://calebevans.me/
-Version: 2.1.0
+Version: 2.2.0
 License: GNU General Public License v2.0
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
@@ -33,7 +33,7 @@ class InterVarsity_Plugin {
 		add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_items' ), 0 );
 		add_filter( 'dashboard_glance_items', array( $this, 'add_post_types_to_dashboard' ), 10 );
 
-		add_filter( 'posts_search', array( $this, 'extend_sg_search'), 500, 2 );
+		add_filter( 'posts_search', array( $this, 'extend_sg_search' ), 500, 2 );
 
 	}
 
@@ -97,7 +97,7 @@ class InterVarsity_Plugin {
 				'menu_position'  => 20,
 				'hierarchical'   => false,
 				'supports'       => array( 'title', 'editor', 'thumbnail', 'revisions' ),
-				'has_archive'    => false,
+				'has_archive'    => 'small-groups/archive',
 				'menu_icon'      => 'dashicons-groups',
 				'rewrite'        => array(
 					'slug'       => 'small-group',
@@ -422,7 +422,7 @@ class InterVarsity_Plugin {
 
 	}
 
-	// Extend small group search to include metadata
+	// Extends small group searches to recognize time, location, etc.
 	public function extend_sg_search( $search, &$wp_query ) {
 		global $wpdb;
 
@@ -492,13 +492,15 @@ class InterVarsity_Plugin {
 						ON `$wpdb->term_taxonomy`.`term_id` = `$wpdb->terms`.`term_id`
 						INNER JOIN `$wpdb->term_relationships`
 						ON `$wpdb->term_relationships`.`term_taxonomy_id` = `$wpdb->term_taxonomy`.`term_taxonomy_id`
-						WHERE `taxonomy` = 'sg_campus'
+						WHERE (
+							`taxonomy` = 'sg_campus'
+							OR `taxonomy` = 'sg_category'
+						)
 						AND `object_id` = `$wpdb->posts`.`ID`
 						AND `$wpdb->terms`.`name` REGEXP '$term_regex'
 				)
 			)";
 		}
-
 		return $search;
 	}
 
@@ -587,5 +589,4 @@ function the_sg_contact_email() {
 	global $post;
 	echo get_the_sg_contact_email( $post->ID );
 }
-
 $iv_plugin = new InterVarsity_Plugin();
