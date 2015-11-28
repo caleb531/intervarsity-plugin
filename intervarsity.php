@@ -309,14 +309,15 @@ class InterVarsity_Plugin {
 					'placeholder' => 'Enter the name of the person to contact'
 				),
 				array(
-					'id'          => '_sg_contact_phone',
+					'id'          => 'sg_contact_phone',
 					'name'        => '_sg_contact_phone',
 					'type'        => 'text',
 					'label'       => 'Phone',
 					'placeholder' => 'Enter the phone number to contact'
 				),
 				array(
-					'id'          => '_sg_contact_email',
+					'id'          => 'sg_contact_email',
+					'name'        => '_sg_contact_email',
 					'type'        => 'text',
 					'label'       => 'Email',
 					'placeholder' => 'Enter the email address to contact'
