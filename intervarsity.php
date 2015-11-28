@@ -251,7 +251,7 @@ class InterVarsity_Plugin {
 	// Indicates if Cyclone Slider 2 plugin is installed and active
 	public function cyclone_slider_is_active() {
 
-		require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		return is_plugin_active( 'cyclone-slider-2/cyclone-slider.php' );
 
 	}
