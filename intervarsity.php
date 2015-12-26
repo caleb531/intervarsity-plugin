@@ -5,7 +5,7 @@ Plugin URI: https://github.com/caleb531/intervarsity-plugin
 Description: The InterVarsity plugin is a WordPress plugin intended for InterVarsity Christian Fellowship/USA chapters. It primarily allows you to create and manage small groups for any number of campuses. The plugin provides several fields for you to describe your small group, including time, location, leaders, and contact information. Other features of the plugin include a Facebook Like Button shortcode and integration with the Cyclone Slider 2 plugin for setting page sliders. Ultimately, the InterVarsity plugin provides an powerful yet intuitive backend for creating your InterVarsity chapter website.
 Author: Caleb Evans
 Author URI: http://calebevans.me/
-Version: 2.2.0
+Version: 2.3.0
 License: GNU General Public License v2.0
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
@@ -64,6 +64,14 @@ class InterVarsity_Plugin {
 
 	}
 
+	// Retrieves the HTML for the sidebar shown in all plugin help menus
+	public function get_help_sidebar() {
+
+		return '<p><strong>For more information:</strong></p>' .
+		'</p><a href="https://github.com/caleb531/intervarsity-plugin/issues" target="_blank">Plugin Support</a></p>';
+
+	}
+
 	// Column populate functions
 
 	public function populate_sg_time( $post_id ) {
@@ -84,24 +92,54 @@ class InterVarsity_Plugin {
 
 		// Define post type for InterVarsity small groups
 		$iv_small_group = new Awesome_Post_Type( array(
-			'id'                 => 'iv_small_group',
+			'id'                      => 'iv_small_group',
 			// Labels and post update messages are automatically generated from
 			// these names
-			'name'               => array(
-				'singular'       => 'small group',
-				'plural'         => 'small groups'
+			'name'                    => array(
+				'singular'            => 'small group',
+				'plural'              => 'small groups'
 			),
-			'args'               => array(
-				'public'         => true,
+			'args'                    => array(
+				'public'              => true,
 				// Place menu item below Pages in the admin sidebar
-				'menu_position'  => 20,
-				'hierarchical'   => false,
-				'supports'       => array( 'title', 'editor', 'thumbnail', 'revisions' ),
-				'has_archive'    => 'small-groups/archive',
-				'menu_icon'      => 'dashicons-groups',
-				'rewrite'        => array(
-					'slug'       => 'small-group',
-					'with_front' => false
+				'menu_position'       => 20,
+				'hierarchical'        => false,
+				'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions' ),
+				'has_archive'         => 'small-groups/archive',
+				'menu_icon'           => 'dashicons-groups',
+				'rewrite'             => array(
+					'slug'            => 'small-group',
+					'with_front'      => false
+				)
+			),
+			'help_menus'              => array(
+				array(
+					'screen'          => 'edit-iv_small_group',
+					'tabs'            => array(
+						array(
+							'id'      => 'sg_overview',
+							'title'   => 'Overview',
+							'content' => '<p>Small groups are similar to pages in that they have a title, body text, and featured image. However, unlike pages, each small group also has a time, location, list of leaders, and contact information. Small groups can also be organized by college campus or by category.</p>'
+						),
+						array(
+							'id'      => 'sg_managing',
+							'title'   => 'Managing Small Groups',
+							'content' => '<p>Managing small groups is very similar to managing pages, and the screens can be customized in the same way.</p>' .
+							'<p>You can also perform the same types of actions, including narrowing the list by using the filters, acting on a small groups using the action links that appear when you hover over a row, or using the Bulk Actions menu to edit the metadata for multiple small groups at once.</p>'
+						)
+					),
+					'sidebar'         => $this->get_help_sidebar()
+				),
+				array(
+					'screen'          => 'iv_small_group',
+					'tabs'            => array(
+						array(
+							'id'      => 'sg_creating',
+							'title'   => 'Creating Small Groups',
+							'content' => '<p>Creating a small group is very similar to creating a page, and the screens can be customized in the same way using drag and drop, the Screen Options tab, and expanding/collapsing boxes as you choose. The small group editor mostly works the same as the page editor, but there are several small group-specific boxes as well (including Details, Campus, and Category).</p>'
+						)
+					),
+					'sidebar'         => $this->get_help_sidebar()
 				)
 			)
 		) );
@@ -141,41 +179,69 @@ class InterVarsity_Plugin {
 
 		// Taxonomy for small group campuses
 		$sg_campus = new Awesome_Taxonomy( array(
-			'id'                    => 'sg_campus',
-			'name'                  => array(
-				'singular'          => 'campus',
-				'plural'            => 'campuses'
+			'id'                      => 'sg_campus',
+			'name'                    => array(
+				'singular'            => 'campus',
+				'plural'              => 'campuses'
 			),
-			'post_types'            => array( 'iv_small_group' ),
+			'post_types'              => array( 'iv_small_group' ),
 			// Add campus filter dropdown to small group edit screen
-			'filterable'            => true,
-			'args'                  => array(
-				'hierarchical'      => true,
-				'show_admin_column' => true,
-				'rewrite'           => array(
-					'slug'          => 'small-groups/campus',
-					'hierarchical'  => true,
-					'with_front'    => false
+			'filterable'              => true,
+			'args'                    => array(
+				'hierarchical'        => true,
+				'show_admin_column'   => true,
+				'rewrite'             => array(
+					'slug'            => 'small-groups/campus',
+					'hierarchical'    => true,
+					'with_front'      => false
+				)
+			),
+			'help_menus'              => array(
+				array(
+					'screen'          => 'edit-sg_campus',
+					'tabs'            => array(
+						array(
+							'id'      => 'sg_campus_overview',
+							'title'   => 'Overview',
+							'content' => '<p>You can use campuses to define sections of your site and group together small groups that belong to the same college campus. Campuses can also be nested to allow for even greater organization and structure.</p>' .
+							'<p>Note that when you delete a campus, you do not delete the small groups which were assigned to that campus.</p>'
+						)
+					),
+					'sidebar'         => $this->get_help_sidebar()
 				)
 			)
 		) );
 
 		// Taxonomy for small group categories
 		$sg_category = new Awesome_Taxonomy( array(
-			'id'                    => 'sg_category',
-			'name'                  => array(
-				'singular'          => 'category',
-				'plural'            => 'categories'
+			'id'                      => 'sg_category',
+			'name'                    => array(
+				'singular'            => 'category',
+				'plural'              => 'categories'
 			),
-			'post_types'            => array( 'iv_small_group' ),
-			'filterable'            => true,
-			'args'                  => array(
-				'hierarchical'      => true,
-				'show_admin_column' => true,
-				'rewrite'           => array(
-					'slug'          => 'small-groups/category',
-					'hierarchical'  => true,
-					'with_front'    => false
+			'post_types'              => array( 'iv_small_group' ),
+			'filterable'              => true,
+			'args'                    => array(
+				'hierarchical'        => true,
+				'show_admin_column'   => true,
+				'rewrite'             => array(
+					'slug'            => 'small-groups/category',
+					'hierarchical'    => true,
+					'with_front'      => false
+				)
+			),
+			'help_menus'              => array(
+				array(
+					'screen'          => 'edit-sg_category',
+					'tabs'            => array(
+						array(
+							'id'      => 'sg_category_overview',
+							'title'   => 'Overview',
+							'content' => '<p>You can use categories to define sections of your site and group together related small groups. Categories can also be nested to allow for even greater organization and structure.</p>' .
+							'<p>Note that when you delete a category, you do not delete the small groups which were assigned to that category.</p>'
+						)
+					),
+					'sidebar'         => $this->get_help_sidebar()
 				)
 			)
 		) );
@@ -185,7 +251,7 @@ class InterVarsity_Plugin {
 	// Indicates if Cyclone Slider 2 plugin is installed and active
 	public function cyclone_slider_is_active() {
 
-		require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		return is_plugin_active( 'cyclone-slider-2/cyclone-slider.php' );
 
 	}
@@ -243,14 +309,15 @@ class InterVarsity_Plugin {
 					'placeholder' => 'Enter the name of the person to contact'
 				),
 				array(
-					'id'          => '_sg_contact_phone',
+					'id'          => 'sg_contact_phone',
 					'name'        => '_sg_contact_phone',
 					'type'        => 'text',
 					'label'       => 'Phone',
 					'placeholder' => 'Enter the phone number to contact'
 				),
 				array(
-					'id'          => '_sg_contact_email',
+					'id'          => 'sg_contact_email',
+					'name'        => '_sg_contact_email',
 					'type'        => 'text',
 					'label'       => 'Email',
 					'placeholder' => 'Enter the email address to contact'
