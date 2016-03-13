@@ -1,6 +1,6 @@
 # InterVarsity WordPress Plugin
 
-*Copyright 2015 Caleb Evans*  
+*Copyright 2016 Caleb Evans*  
 *Released under the GNU General Public License v2.0*
 
 The InterVarsity plugin is a WordPress plugin intended for [InterVarsity Christian Fellowship/USA](http://intervarsity.org/) chapters with a WordPress site. I originally created the plugin for the [InterVarsity North County chapter website](http://ivnorthcounty.org/), but I have since decided to open-source the plugin for the benefit of all InterVarsity chapters.
