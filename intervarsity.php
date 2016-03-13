@@ -448,6 +448,19 @@ class InterVarsity_Plugin {
 
 	}
 
+	// Spam-proof email link shortcode
+	public function iv_email_link_shortcode( $atts, $content = '' ) {
+		ob_start();
+		?>
+		<?php if ( ! empty( $atts['email'] ) ): ?>
+			<a href="mailto:<?php echo antispambot( $atts['email'] ); ?>"><?php echo $content; ?></a>
+		<?php else: ?>
+			<?php echo $content; ?>
+		<?php endif; ?>
+		<?php
+		return trim( ob_get_clean() );
+	}
+
 	// Adds InterVarsity-related shortcodes
 	public function add_shortcodes() {
 
@@ -458,6 +471,7 @@ class InterVarsity_Plugin {
 		add_shortcode( 'sg-contact-phone', 'get_the_sg_contact_phone' );
 		add_shortcode( 'sg-contact-email', 'get_the_sg_contact_email' );
 		add_shortcode( 'iv-facebook-like-button', array( $this, 'iv_facebook_like_button_shortcode' ) );
+		add_shortcode( 'iv-email-link', array( $this, 'iv_email_link_shortcode' ) );
 
 	}
 
