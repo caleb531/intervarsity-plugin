@@ -5,7 +5,7 @@ Plugin URI: https://github.com/caleb531/intervarsity-plugin
 Description: The InterVarsity plugin is a WordPress plugin intended for InterVarsity Christian Fellowship/USA chapters. It primarily allows you to create and manage small groups for any number of campuses. The plugin provides several fields for you to describe your small group, including time, location, leaders, and contact information. Other features of the plugin include a Facebook Like Button shortcode and integration with the Cyclone Slider 2 plugin for setting page sliders. Ultimately, the InterVarsity plugin provides an powerful yet intuitive backend for creating your InterVarsity chapter website.
 Author: Caleb Evans
 Author URI: http://calebevans.me/
-Version: 2.3.0
+Version: 2.4.0
 License: GNU General Public License v2.0
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
@@ -448,6 +448,19 @@ class InterVarsity_Plugin {
 
 	}
 
+	// Spam-proof email link shortcode
+	public function iv_email_link_shortcode( $atts, $content = '' ) {
+		ob_start();
+		?>
+		<?php if ( ! empty( $atts['email'] ) ): ?>
+			<a href="mailto:<?php echo antispambot( $atts['email'] ); ?>"><?php echo $content; ?></a>
+		<?php else: ?>
+			<?php echo $content; ?>
+		<?php endif; ?>
+		<?php
+		return trim( ob_get_clean() );
+	}
+
 	// Adds InterVarsity-related shortcodes
 	public function add_shortcodes() {
 
@@ -458,6 +471,7 @@ class InterVarsity_Plugin {
 		add_shortcode( 'sg-contact-phone', 'get_the_sg_contact_phone' );
 		add_shortcode( 'sg-contact-email', 'get_the_sg_contact_email' );
 		add_shortcode( 'iv-facebook-like-button', array( $this, 'iv_facebook_like_button_shortcode' ) );
+		add_shortcode( 'iv-email-link', array( $this, 'iv_email_link_shortcode' ) );
 
 	}
 
@@ -488,6 +502,9 @@ class InterVarsity_Plugin {
 		);
 
 	}
+
+	// Undescriptive terms (like prepositions) to ignore in search queries
+	public static $ignored_search_terms = array( 'at', 'of', 'on', 'in', 'a', 'an', 'the', 'small', 'group', 'groups', 'study', 'studies', 'bible' );
 
 	// Extends small group searches to recognize time, location, etc.
 	public function extend_sg_search( $search, &$wp_query ) {
@@ -528,6 +545,10 @@ class InterVarsity_Plugin {
 		foreach ( $terms as $term ) {
 			// Do not search for term if empty
 			if ( empty( $term ) ) {
+				continue;
+			}
+			// Ignore all terms designated as ignored
+			if ( array_search( $term, InterVarsity_Plugin::$ignored_search_terms ) !== false ) {
 				continue;
 			}
 			// Make terms like "women" and "womens" equivalent
