@@ -48,12 +48,22 @@ This plugin provides a number of [shortcodes](https://codex.wordpress.org/Shortc
 
 ### Facebook Like Button shortcode
 
-The theme also includes a useful shortcode for adding a [Facebook Like Button](https://developers.facebook.com/docs/plugins/like-button) to your site.
+The plugin also includes a useful shortcode for adding a [Facebook Like Button](https://developers.facebook.com/docs/plugins/like-button) to your site.
 
 #### Example
 
 ```
 [iv-facebook-like-button href='https://www.facebook.com/intervarsity.usa' layout='standard' action='like' share='true' show-faces='true' width='300']
+```
+
+### Email link shortcode
+
+For securely displaying email addresses in page and post content, the InterVarsity plugin includes an `[iv-email-link]` shortcode. The shortcode works by encoding the email address you enter so as to deter spam bots from harvesting it. This encoding isn't guaranteed to stop *all* spam bots, but it should help nonetheless.
+
+#### Example
+
+```
+[iv-email-link email="me@example.com"]Email me[/iv-email-link]
 ```
 
 ### Cyclone Slider 2 Integration
