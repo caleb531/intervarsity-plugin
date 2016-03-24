@@ -33,7 +33,7 @@ Every small group has the standard title, description, and support for featured 
 
 Each small group can be assigned a campus to which it belongs. You can create new campuses under the **Campuses** section of the **Small Groups** admin menu in the sidebar. While you can technically assign multiple campuses to a single small group, I recommend that each small group have only one assigned campus.
 
-Similarly, you can create and assign any number of categories to any small group. You can create new categories under the **Campuses** section of the **Small Groups** admin menu in the sidebar. Unlike campuses, are encouraged to assign multiple categories to a small group.
+Similarly, you can create and assign any number of categories to any small group. You can create new categories under the **Categories** section of the **Small Groups** admin menu in the sidebar. Unlike campuses, it is acceptable and encouraged to assign multiple categories to each small group as appropriate.
 
 ### Small group shortcodes
 
