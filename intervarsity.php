@@ -512,6 +512,8 @@ class InterVarsity_Plugin {
 		'group',
 		'groups',
 		'in',
+		'intervarsity',
+		'iv',
 		'of',
 		'on',
 		'small',
