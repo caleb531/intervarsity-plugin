@@ -505,19 +505,19 @@ class InterVarsity_Plugin {
 
 	// Undescriptive terms (like prepositions) to ignore in search queries
 	public static $ignored_search_terms = array(
-		'at',
-		'of',
-		'on',
-		'in',
 		'a',
 		'an',
-		'the',
-		'small',
+		'at',
+		'bible',
 		'group',
 		'groups',
-		'study',
+		'in',
+		'of',
+		'on',
+		'small',
 		'studies',
-		'bible'
+		'study',
+		'the'
 	);
 
 	// Extends small group searches to recognize time, location, etc.
