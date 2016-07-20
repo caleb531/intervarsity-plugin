@@ -504,7 +504,21 @@ class InterVarsity_Plugin {
 	}
 
 	// Undescriptive terms (like prepositions) to ignore in search queries
-	public static $ignored_search_terms = array( 'at', 'of', 'on', 'in', 'a', 'an', 'the', 'small', 'group', 'groups', 'study', 'studies', 'bible' );
+	public static $ignored_search_terms = array(
+		'at',
+		'of',
+		'on',
+		'in',
+		'a',
+		'an',
+		'the',
+		'small',
+		'group',
+		'groups',
+		'study',
+		'studies',
+		'bible'
+	);
 
 	// Extends small group searches to recognize time, location, etc.
 	public function extend_sg_search( $search, &$wp_query ) {
