@@ -473,6 +473,7 @@ class InterVarsity_Plugin {
 	public function add_shortcodes() {
 
 		add_shortcode( 'sg-time', 'get_the_sg_time' );
+		add_shortcode( 'sg-start-date', 'get_the_sg_start_date' );
 		add_shortcode( 'sg-location', 'get_the_sg_location' );
 		add_shortcode( 'sg-leaders', 'get_the_sg_leaders' );
 		add_shortcode( 'sg-contact-name', 'get_the_sg_contact_name' );
@@ -670,6 +671,10 @@ function get_the_sg_time() {
 	global $post;
 	return trim( get_post_meta( $post->ID, '_sg_time', true ) );
 }
+function get_the_sg_start_date() {
+	global $post;
+	return trim( get_post_meta( $post->ID, '_sg_start_date', true ) );
+}
 function get_the_sg_location() {
 	global $post;
 	return trim( get_post_meta( $post->ID, '_sg_location', true ) );
@@ -696,6 +701,10 @@ function get_the_sg_contact_email() {
 function the_sg_time() {
 	global $post;
 	echo get_the_sg_time( $post->ID );
+}
+function the_sg_start_date() {
+	global $post;
+	echo get_the_sg_start_date( $post->ID );
 }
 function the_sg_location() {
 	global $post;
