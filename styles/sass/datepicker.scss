@@ -79,7 +79,10 @@
 .ui-datepicker .ui-datepicker-current-day a {
 	color: #fff
 }
-.ui-datepicker .ui-datepicker-calendar .ui-datepicker-unselectable:hover {
-	background-color: #fff;
-	cursor: default;
+.ui-datepicker .ui-datepicker-calendar .ui-datepicker-unselectable {
+	color: #aaa;
+	&:hover {
+		background-color: #fff;
+		cursor: default;
+	}
 }
