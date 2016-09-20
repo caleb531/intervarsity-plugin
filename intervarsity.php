@@ -30,6 +30,7 @@ class InterVarsity_Plugin {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_scripts' ), 10 );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ), 10 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ), 10 );
 		add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_items' ), 0 );
 		add_filter( 'dashboard_glance_items', array( $this, 'add_post_types_to_dashboard' ), 10 );
 
@@ -277,6 +278,13 @@ class InterVarsity_Plugin {
 					'placeholder' => 'Enter the days and time of the small group'
 				),
 				array(
+					'id'          => 'sg_start_date',
+					'name'        => '_sg_start_date',
+					'type'        => 'text',
+					'label'       => 'Start Date',
+					'placeholder' => 'Enter the date of the small group\'s first meeting'
+				),
+				array(
 					'id'          => 'sg_location',
 					'name'        => '_sg_location',
 					'type'        => 'text',
@@ -492,13 +500,29 @@ class InterVarsity_Plugin {
 
 	}
 
-	// Enqueues necessary backend (admin) stylehseets and scripts
+	// Enqueues necessary backend (admin) stylehseets
 	public function enqueue_admin_styles() {
 
 		// Enqueue stylesheet for admin interface and meta boxes
 		wp_enqueue_style(
 			'iv-admin',
 			IV_PLUGIN_DIR_URI . '/styles/css/admin.css'
+		);
+		// Enqueue stylesheet for jQuery UI Datepicker
+		wp_enqueue_style(
+			'jquery-ui-datepicker-style',
+			IV_PLUGIN_DIR_URI . '/styles/css/datepicker.css'
+		);
+
+	}
+
+	// Enqueues necessary backend (admin) scripts
+	public function enqueue_admin_scripts() {
+
+		wp_enqueue_script('jquery-ui-datepicker');
+		wp_enqueue_script(
+			'iv-datepicker',
+			IV_PLUGIN_DIR_URI . '/scripts/datepicker.min.js'
 		);
 
 	}
