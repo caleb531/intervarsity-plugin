@@ -282,7 +282,7 @@ class InterVarsity_Plugin {
 					'name'        => '_sg_start_date',
 					'type'        => 'text',
 					'label'       => 'Start Date',
-					'placeholder' => 'Enter the date of the small group\'s first meeting'
+					'placeholder' => 'Enter the date the small group first meets'
 				),
 				array(
 					'id'          => 'sg_location',
