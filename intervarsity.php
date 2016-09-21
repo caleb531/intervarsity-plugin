@@ -512,7 +512,7 @@ class InterVarsity_Plugin {
 		$current_screen = get_current_screen();
 		if ( ! empty( $current_screen ) && 'iv_small_group' === $current_screen->id ) {
 			wp_enqueue_style(
-				'jquery-ui-datepicker-style',
+				'iv-datepicker',
 				IV_PLUGIN_DIR_URI . '/styles/css/datepicker.css'
 			);
 			wp_enqueue_script('jquery-ui-datepicker');
