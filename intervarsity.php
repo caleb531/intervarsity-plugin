@@ -29,8 +29,7 @@ class InterVarsity_Plugin {
 		$this->add_shortcodes();
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_scripts' ), 10 );
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ), 10 );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ), 10 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_resources' ), 10 );
 		add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_items' ), 0 );
 		add_filter( 'dashboard_glance_items', array( $this, 'add_post_types_to_dashboard' ), 10 );
 
@@ -501,30 +500,27 @@ class InterVarsity_Plugin {
 
 	}
 
-	// Enqueues necessary backend (admin) stylehseets
-	public function enqueue_admin_styles() {
+	// Enqueues necessary admin styles and scripts
+	public function enqueue_admin_resources() {
 
 		// Enqueue stylesheet for admin interface and meta boxes
 		wp_enqueue_style(
 			'iv-admin',
 			IV_PLUGIN_DIR_URI . '/styles/css/admin.css'
 		);
-		// Enqueue stylesheet for jQuery UI Datepicker
-		wp_enqueue_style(
-			'jquery-ui-datepicker-style',
-			IV_PLUGIN_DIR_URI . '/styles/css/datepicker.css'
-		);
-
-	}
-
-	// Enqueues necessary backend (admin) scripts
-	public function enqueue_admin_scripts() {
-
-		wp_enqueue_script('jquery-ui-datepicker');
-		wp_enqueue_script(
-			'iv-datepicker',
-			IV_PLUGIN_DIR_URI . '/scripts/datepicker.min.js'
-		);
+		// Enqueue styles/scripts for jQuery UI Datepicker
+		$current_screen = get_current_screen();
+		if ( ! empty( $current_screen ) && 'iv_small_group' === $current_screen->id ) {
+			wp_enqueue_style(
+				'jquery-ui-datepicker-style',
+				IV_PLUGIN_DIR_URI . '/styles/css/datepicker.css'
+			);
+			wp_enqueue_script('jquery-ui-datepicker');
+			wp_enqueue_script(
+				'iv-datepicker',
+				IV_PLUGIN_DIR_URI . '/scripts/datepicker.min.js'
+			);
+		}
 
 	}
 
