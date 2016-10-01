@@ -1,4 +1,4 @@
-// Connect to Facebook API for use with Like button
+// Enable the SG Start Date datepicker widget
 (function ($) {
 $(document).ready(function () {
 
