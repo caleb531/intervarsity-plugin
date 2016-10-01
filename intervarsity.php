@@ -29,7 +29,7 @@ class InterVarsity_Plugin {
 		$this->add_shortcodes();
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_scripts' ), 10 );
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ), 10 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_resources' ), 10 );
 		add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_items' ), 0 );
 		add_filter( 'dashboard_glance_items', array( $this, 'add_post_types_to_dashboard' ), 10 );
 
@@ -277,6 +277,13 @@ class InterVarsity_Plugin {
 					'placeholder' => 'Enter the days and time of the small group'
 				),
 				array(
+					'id'          => 'sg_start_date',
+					'name'        => '_sg_start_date',
+					'type'        => 'text',
+					'label'       => 'Start Date',
+					'placeholder' => 'Enter the date the small group first meets'
+				),
+				array(
 					'id'          => 'sg_location',
 					'name'        => '_sg_location',
 					'type'        => 'text',
@@ -465,6 +472,7 @@ class InterVarsity_Plugin {
 	public function add_shortcodes() {
 
 		add_shortcode( 'sg-time', 'get_the_sg_time' );
+		add_shortcode( 'sg-start-date', 'get_the_sg_start_date' );
 		add_shortcode( 'sg-location', 'get_the_sg_location' );
 		add_shortcode( 'sg-leaders', 'get_the_sg_leaders' );
 		add_shortcode( 'sg-contact-name', 'get_the_sg_contact_name' );
@@ -492,14 +500,27 @@ class InterVarsity_Plugin {
 
 	}
 
-	// Enqueues necessary backend (admin) stylehseets and scripts
-	public function enqueue_admin_styles() {
+	// Enqueues necessary admin styles and scripts
+	public function enqueue_admin_resources() {
 
 		// Enqueue stylesheet for admin interface and meta boxes
 		wp_enqueue_style(
 			'iv-admin',
 			IV_PLUGIN_DIR_URI . '/styles/css/admin.css'
 		);
+		// Enqueue styles/scripts for jQuery UI Datepicker
+		$current_screen = get_current_screen();
+		if ( ! empty( $current_screen ) && 'iv_small_group' === $current_screen->id ) {
+			wp_enqueue_style(
+				'iv-datepicker',
+				IV_PLUGIN_DIR_URI . '/styles/css/datepicker.css'
+			);
+			wp_enqueue_script('jquery-ui-datepicker');
+			wp_enqueue_script(
+				'iv-datepicker',
+				IV_PLUGIN_DIR_URI . '/scripts/datepicker.min.js'
+			);
+		}
 
 	}
 
@@ -646,6 +667,10 @@ function get_the_sg_time() {
 	global $post;
 	return trim( get_post_meta( $post->ID, '_sg_time', true ) );
 }
+function get_the_sg_start_date() {
+	global $post;
+	return trim( get_post_meta( $post->ID, '_sg_start_date', true ) );
+}
 function get_the_sg_location() {
 	global $post;
 	return trim( get_post_meta( $post->ID, '_sg_location', true ) );
@@ -672,6 +697,10 @@ function get_the_sg_contact_email() {
 function the_sg_time() {
 	global $post;
 	echo get_the_sg_time( $post->ID );
+}
+function the_sg_start_date() {
+	global $post;
+	echo get_the_sg_start_date( $post->ID );
 }
 function the_sg_location() {
 	global $post;

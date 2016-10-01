@@ -41,8 +41,9 @@ small groups:
 
 1. Details
   1. Time
-  2. Location
-  3. Leaders
+  2. Start Date
+  3. Location
+  4. Leaders
 2. Contact information
   1. Name
   2. Phone number
@@ -67,6 +68,7 @@ you wish to mention who's leading (for example) in the small group description.
 The following shortcodes are available:
 
 - `[sg-time]`
+- `[sg-start-date]`
 - `[sg-location]`
 - `[sg-leaders]`
 - `[sg-contact-name]`
