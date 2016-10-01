@@ -15,7 +15,8 @@ module.exports = function(grunt) {
 					sourcemap: 'file'
 				},
 				files: {
-					'styles/css/admin.css': 'styles/sass/admin.scss'
+					'styles/css/admin.css': 'styles/sass/admin.scss',
+					'styles/css/datepicker.css': 'styles/sass/datepicker.scss'
 				}
 			}
 		},
@@ -40,6 +41,7 @@ module.exports = function(grunt) {
 			},
 			scripts: {
 				files: {
+					'scripts/datepicker.min.js': 'scripts/datepicker.js',
 					'scripts/facebook.min.js': 'scripts/facebook.js'
 				}
 			}
@@ -48,6 +50,7 @@ module.exports = function(grunt) {
 		watch: {
 			scripts: {
 				files: [
+					'scripts/datepicker.js',
 					'scripts/facebook.js'
 				],
 				tasks: [
