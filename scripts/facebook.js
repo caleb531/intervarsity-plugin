@@ -12,7 +12,7 @@ if ( 0 !== $( '.fb-like' ).length ) {
 		}
 		js = d.createElement(s);
 		js.id = id;
-		js.src = 'http://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4';
+		js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4';
 		fjs.parentNode.insertBefore(js, fjs);
 	}( document, 'script', 'facebook-jssdk' ));
 }
