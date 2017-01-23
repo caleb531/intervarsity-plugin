@@ -6,9 +6,9 @@
 The InterVarsity Plugin is a WordPress plugin intended for [InterVarsity
 Christian Fellowship/USA](http://intervarsity.org/) chapters with a WordPress
 site. I originally created the plugin for the [InterVarsity North County chapter
-website](http://ivnorthcounty.org/), but I have since decided to open-source the
-plugin for the benefit of all InterVarsity chapters. Please note that this is an
-unofficial plugin which is not affiliated with InterVarsity.
+website](https://ivnorthcounty.org/), but I have since decided to open-source
+the plugin for the benefit of all InterVarsity chapters. Please note that this
+is an unofficial plugin which is not affiliated with InterVarsity.
 
 This plugin integrates perfectly with the [InterVarsity
 Theme](https://github.com/caleb531/intervarsity-theme), which I also created for
