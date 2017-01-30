@@ -92,25 +92,27 @@ class InterVarsity_Plugin {
 
 		// Define post type for InterVarsity small groups
 		$iv_small_group = new Awesome_Post_Type( array(
-			'id'                      => 'iv_small_group',
+			'id'                        => 'iv_small_group',
 			// Labels and post update messages are automatically generated from
 			// these names
-			'name'                    => array(
-				'singular'            => 'small group',
-				'plural'              => 'small groups'
+			'name'                      => array(
+				'singular'              => 'small group',
+				'plural'                => 'small groups'
 			),
-			'args'                    => array(
-				'public'              => true,
+			'args'                      => array(
+				'public'                => true,
 				// Place menu item below Pages in the admin sidebar
-				'menu_position'       => 20,
-				'hierarchical'        => false,
-				'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions' ),
-				'has_archive'         => 'small-groups/archive',
-				'menu_icon'           => 'dashicons-groups',
-				'rewrite'             => array(
-					'slug'            => 'small-group',
-					'with_front'      => false
-				)
+				'menu_position'         => 20,
+				'hierarchical'          => false,
+				'supports'              => array( 'title', 'editor', 'thumbnail', 'revisions' ),
+				'has_archive'           => 'small-groups/archive',
+				'menu_icon'             => 'dashicons-groups',
+				'rewrite'               => array(
+					'slug'              => 'small-group',
+					'with_front'        => false
+				),
+				'rest_base'             => 'small-groups-api',
+				'rest_controller_class' => 'WP_REST_Posts_Controller'
 			),
 			'help_menus'              => array(
 				array(
