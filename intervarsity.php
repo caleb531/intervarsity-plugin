@@ -112,8 +112,7 @@ class InterVarsity_Plugin {
 					'with_front'        => false
 				),
 				'show_in_rest'          => true,
-				'rest_base'             => 'small-groups-api',
-				'rest_controller_class' => 'WP_REST_Posts_Controller'
+				'rest_base'             => 'small-groups-api'
 			),
 			'help_menus'              => array(
 				array(
