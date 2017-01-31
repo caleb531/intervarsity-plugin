@@ -179,9 +179,28 @@ class InterVarsity_Plugin {
 
 	// Register small group fields with REST API
 	public function rest_api_init() {
-		$sg_rest_fields = array( 'sg_time', 'sg_start_date', 'sg_location', 'sg_leaders', 'sg_contact_name', 'sg_contact_phone', 'sg_contact_email' );
-		foreach ( $sg_rest_fields as $field_name ) {
+		// Public SG fields included in REST requests for SGs
+		$public_sg_rest_fields = array(
+			'sg_time',
+			'sg_start_date',
+			'sg_location',
+			'sg_leaders'
+		);
+		// Sensitive SG fields that should not be available to bots
+		$sensitive_sg_rest_fields = array(
+			'sg_contact_name',
+			'sg_contact_phone',
+			'sg_contact_email'
+		);
+		foreach ( $public_sg_rest_fields as $field_name ) {
 			$this->register_sg_meta_rest( $field_name );
+		}
+		// Use a nonce on the page to ensure that sensitive fields are only
+		// displayed for requests made by actual humans
+		if ( isset( $_SERVER['HTTP_X_WP_NONCE'] ) && wp_verify_nonce( $_SERVER['HTTP_X_WP_NONCE'], 'wp_rest' ) ) {
+			foreach ( $sensitive_sg_rest_fields as $field_name ) {
+				$this->register_sg_meta_rest( $field_name );
+			}
 		}
 	}
 
