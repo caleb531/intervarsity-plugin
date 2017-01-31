@@ -25,6 +25,7 @@ class InterVarsity_Plugin {
 		register_deactivation_hook( __FILE__, 'flush_rewrite_rules' );
 
 		add_action( 'init', array( $this, 'init' ), 0 );
+		add_action( 'rest_api_init', array( $this, 'rest_api_init' ), 0 );
 
 		$this->add_shortcodes();
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_scripts' ), 10 );
@@ -112,7 +113,7 @@ class InterVarsity_Plugin {
 					'with_front'        => false
 				),
 				'show_in_rest'          => true,
-				'rest_base'             => 'small-groups-api'
+				'rest_base'             => 'small-groups'
 			),
 			'help_menus'              => array(
 				array(
@@ -174,6 +175,71 @@ class InterVarsity_Plugin {
 		// for small groups
 		$iv_small_group->remove_columns( array( 'date' ) );
 
+	}
+
+	// Register small group fields with REST API
+	public function rest_api_init() {
+		$sg_rest_fields = array( 'sg_time', 'sg_start_date', 'sg_location', 'sg_leaders', 'sg_contact_name', 'sg_contact_phone', 'sg_contact_email' );
+		foreach ( $sg_rest_fields as $field_name ) {
+			$this->register_sg_meta_rest( $field_name );
+		}
+	}
+
+	// Register a particular small group field with REST API
+	public function register_sg_meta_rest( $field_name ) {
+		register_rest_field( 'iv_small_group', $field_name, array(
+			'get_callback'    => array( $this, "get_the_{$field_name}_rest" ),
+			'update_callback' => array( $this, "set_the_{$field_name}_rest" ),
+			'schema'          => null
+		) );
+	}
+
+	// REST API functions for retrieving small group data
+
+	public function get_the_sg_time_rest( $post_json ) {
+		return trim( get_post_meta( $post_json['id'], '_sg_time', true ) );
+	}
+	public function get_the_sg_start_date_rest( $post_json ) {
+		return trim( get_post_meta( $post_json['id'], '_sg_start_date', true ) );
+	}
+	public function get_the_sg_location_rest( $post_json ) {
+		return trim( get_post_meta( $post_json['id'], '_sg_location', true ) );
+	}
+	public function get_the_sg_leaders_rest( $post_json ) {
+		return trim( get_post_meta( $post_json['id'], '_sg_leaders', true ) );
+	}
+	public function get_the_sg_contact_name_rest( $post_json ) {
+		return trim( get_post_meta( $post_json['id'], '_sg_contact_name', true ) );
+	}
+	public function get_the_sg_contact_phone_rest( $post_json ) {
+		return trim( get_post_meta( $post_json['id'], '_sg_contact_phone', true ) );
+	}
+	public function get_the_sg_contact_email_rest( $post_json ) {
+		return trim( get_post_meta( $post_json['id'], '_sg_contact_email', true ) );
+	}
+
+	// REST API functions for setting small group data
+
+	public function set_the_sg_time_rest( $time, $post_json ) {
+		update_post_meta( $post_json['id'], '_sg_time', $time );
+	}
+	public function set_the_sg_start_date_rest( $start_date, $post_json ) {
+		update_post_meta( $post_json['id'], '_sg_start_date', $start_date );
+	}
+	public function set_the_sg_location_rest( $location, $post_json ) {
+		update_post_meta( $post_json['id'], '_sg_location', $location );
+	}
+	public function set_the_sg_leaders_rest( $leaders, $post_json ) {
+		update_post_meta( $post_json['id'], '_sg_leaders', $leaders );
+	}
+	public function set_the_sg_contact_name_rest( $contact_name, $post_json ) {
+		update_post_meta( $post_json['id'], '_sg_contact_name', $contact_name );
+	}
+	public function set_the_sg_contact_phone_rest( $contact_phone, $post_json ) {
+		update_post_meta( $post_json['id'], '_sg_contact_phone', $contact_phone );
+	}
+	public function set_the_sg_contact_email_rest( $contact_email, $post_json ) {
+		update_post_meta( $post_json['id'], '_sg_contact_email', $contact_email );
 	}
 
 	// Adds and configures custom taxonomies
@@ -694,6 +760,37 @@ function get_the_sg_contact_email() {
 	return trim( get_post_meta( $post->ID, '_sg_contact_email', true ) );
 }
 
+// Template functions for setting small group data (used in The Loop)
+
+function set_the_sg_time( $time ) {
+	global $post;
+	update_post_meta( $post->ID, '_sg_time', $time );
+}
+function set_the_sg_start_date( $start_date ) {
+	global $post;
+	update_post_meta( $post->ID, '_sg_start_date', $start_date );
+}
+function set_the_sg_location( $location ) {
+	global $post;
+	update_post_meta( $post->ID, '_sg_location', $location );
+}
+function set_the_sg_leaders( $leaders ) {
+	global $post;
+	update_post_meta( $post->ID, '_sg_leaders', $leaders );
+}
+function set_the_sg_contact_name( $contact_name ) {
+	global $post;
+	update_post_meta( $post->ID, '_sg_contact_name', $contact_name );
+}
+function set_the_sg_contact_phone( $contact_phone ) {
+	global $post;
+	update_post_meta( $post->ID, '_sg_contact_phone', $contact_phone );
+}
+function set_the_sg_contact_email( $contact_email ) {
+	global $post;
+	update_post_meta( $post->ID, '_sg_contact_email', $contact_email );
+}
+
 // Template functions for outputting small group data (also used in The Loop)
 
 function the_sg_time() {
@@ -724,4 +821,5 @@ function the_sg_contact_email() {
 	global $post;
 	echo get_the_sg_contact_email( $post->ID );
 }
+
 $iv_plugin = new InterVarsity_Plugin();
