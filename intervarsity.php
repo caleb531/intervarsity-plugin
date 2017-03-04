@@ -779,37 +779,6 @@ function get_the_sg_contact_email() {
 	return trim( get_post_meta( $post->ID, '_sg_contact_email', true ) );
 }
 
-// Template functions for setting small group data (used in The Loop)
-
-function set_the_sg_time( $time ) {
-	global $post;
-	update_post_meta( $post->ID, '_sg_time', $time );
-}
-function set_the_sg_start_date( $start_date ) {
-	global $post;
-	update_post_meta( $post->ID, '_sg_start_date', $start_date );
-}
-function set_the_sg_location( $location ) {
-	global $post;
-	update_post_meta( $post->ID, '_sg_location', $location );
-}
-function set_the_sg_leaders( $leaders ) {
-	global $post;
-	update_post_meta( $post->ID, '_sg_leaders', $leaders );
-}
-function set_the_sg_contact_name( $contact_name ) {
-	global $post;
-	update_post_meta( $post->ID, '_sg_contact_name', $contact_name );
-}
-function set_the_sg_contact_phone( $contact_phone ) {
-	global $post;
-	update_post_meta( $post->ID, '_sg_contact_phone', $contact_phone );
-}
-function set_the_sg_contact_email( $contact_email ) {
-	global $post;
-	update_post_meta( $post->ID, '_sg_contact_email', $contact_email );
-}
-
 // Template functions for outputting small group data (also used in The Loop)
 
 function the_sg_time() {
