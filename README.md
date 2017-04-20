@@ -100,10 +100,10 @@ nonetheless.
 [iv-email-link email="me@example.com"]Email me[/iv-email-link]
 ```
 
-### Cyclone Slider 2 Integration
+### Cyclone Slider Integration
 
-The plugin also integrates with the [Cyclone Slider
-2](https://wordpress.org/plugins/cyclone-slider-2/) plugin by allowing you to
+The plugin also integrates with the [Cyclone
+Slider](https://wordpress.org/plugins/cyclone-slider/) plugin by allowing you to
 assign sliders to particular pages on your site. A new box titled **Featured
 Slider** is added to the **Edit** screen for an individual page.
 

@@ -2,7 +2,7 @@
 /*
 Plugin Name: InterVarsity
 Plugin URI: https://github.com/caleb531/intervarsity-plugin
-Description: The InterVarsity Plugin is a WordPress plugin intended for InterVarsity Christian Fellowship/USA chapters. It primarily allows you to create and manage small groups for any number of campuses. The plugin provides several fields for you to describe your small group, including time, location, leaders, and contact information. Other features of the plugin include a Facebook Like Button shortcode and integration with the Cyclone Slider 2 plugin for setting page sliders. Ultimately, the InterVarsity Plugin provides an powerful yet intuitive backend for creating your InterVarsity chapter website.
+Description: The InterVarsity Plugin is a WordPress plugin intended for InterVarsity Christian Fellowship/USA chapters. It primarily allows you to create and manage small groups for any number of campuses. The plugin provides several fields for you to describe your small group, including time, location, leaders, and contact information. Other features of the plugin include a Facebook Like Button shortcode and integration with the Cyclone Slider plugin for setting page sliders. Ultimately, the InterVarsity Plugin provides an powerful yet intuitive backend for creating your InterVarsity chapter website.
 Author: Caleb Evans
 Author URI: https://calebevans.me/
 Version: 2.6.0
@@ -335,11 +335,11 @@ class InterVarsity_Plugin {
 
 	}
 
-	// Indicates if Cyclone Slider 2 plugin is installed and active
+	// Indicates if Cyclone Slider plugin is installed and active
 	public function cyclone_slider_is_active() {
 
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
-		return is_plugin_active( 'cyclone-slider-2/cyclone-slider.php' );
+		return is_plugin_active( 'cyclone-slider/cyclone-slider.php' );
 
 	}
 
