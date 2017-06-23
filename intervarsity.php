@@ -547,7 +547,7 @@ class InterVarsity_Plugin {
 		ob_start();
 		?>
 		<?php if ( ! empty( $atts['email'] ) ): ?>
-			<a href="mailto:<?php echo antispambot( $atts['email'] ); ?>"><?php echo $content; ?></a>
+			<a href="mailto:<?php echo antispambot( $atts['email'], true ); ?>"><?php echo $content; ?></a>
 		<?php else: ?>
 			<?php echo $content; ?>
 		<?php endif; ?>
