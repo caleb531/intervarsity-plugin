@@ -1,7 +1,7 @@
 # InterVarsity WordPress Plugin
 
 *Copyright 2017 Caleb Evans*  
-*Released under the GNU General Public License v2.0*
+*Released under the GNU General Public License v3.0*
 
 The InterVarsity Plugin is a WordPress plugin intended for [InterVarsity
 Christian Fellowship/USA](http://intervarsity.org/) chapters with a WordPress
