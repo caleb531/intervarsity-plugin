@@ -1,3 +1,5 @@
+var path = require('path');
+
 // Config file for Grunt, which enables automatic style/script compilation
 module.exports = function(grunt) {
 
@@ -10,14 +12,22 @@ module.exports = function(grunt) {
 				style: 'compressed',
 				cacheLocation: 'styles/sass/.sass-cache'
 			},
-			external: {
+			all: {
 				options: {
 					sourcemap: 'file'
 				},
-				files: {
-					'styles/css/admin.css': 'styles/sass/admin.scss',
-					'styles/css/datepicker.css': 'styles/sass/datepicker.scss'
-				}
+				files: [{
+					expand: true,
+					cwd: '.',
+					src: ['styles/sass/*.scss'],
+					rename: function (dest, src) {
+						return path.join(
+							path.dirname(path.dirname(src)),
+							'css',
+							path.basename(src).replace('.scss', '.css')
+						);
+					}
+				}]
 			}
 		},
 
@@ -39,19 +49,24 @@ module.exports = function(grunt) {
 			options: {
 				sourceMap: true
 			},
-			scripts: {
-				files: {
-					'scripts/datepicker.min.js': 'scripts/datepicker.js',
-					'scripts/facebook.min.js': 'scripts/facebook.js'
-				}
+			all: {
+				files: [{
+					expand: true,
+					cwd: '.',
+					src: [
+						'scripts/*.js',
+						'!scripts/*.min.js'
+					],
+					ext: '.min.js'
+				}]
 			}
 		},
 
 		watch: {
 			scripts: {
 				files: [
-					'scripts/datepicker.js',
-					'scripts/facebook.js'
+					'scripts/*.js',
+					'!scripts/*.min.js'
 				],
 				tasks: [
 					'uglify'
