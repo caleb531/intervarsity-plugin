@@ -631,7 +631,7 @@ class InterVarsity_Plugin {
 	);
 
 	// Extends small group searches to recognize time, location, etc.
-	public function extend_sg_search( $search, &$wp_query ) {
+	public function extend_sg_search( $search, $wp_query ) {
 		global $wpdb;
 
 		// Stop if the given SQL clause is empty
