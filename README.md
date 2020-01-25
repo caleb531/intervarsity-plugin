@@ -16,6 +16,8 @@ the InterVarsity North County website. The theme is also open-source, and you
 are certainly free to build your own WordPress theme that integrates with this
 plugin.
 
+[Download InterVarsity Plugin (ZIP)](https://github.com/caleb531/intervarsity-plugin/releases/download/v4.0.0/intervarsity-plugin-4.0.0.zip)
+
 ## Requirements
 
 1. Your site must be running WordPress 4.4 or newer.
