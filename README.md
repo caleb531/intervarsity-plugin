@@ -1,6 +1,6 @@
 # InterVarsity WordPress Plugin
 
-*Copyright 2015-2020 Caleb Evans*  
+*Copyright 2015-2025 Caleb Evans*  
 *Released under the GNU General Public License v3.0*
 
 The InterVarsity Plugin is a WordPress plugin intended for [InterVarsity
