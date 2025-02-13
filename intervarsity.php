@@ -682,7 +682,7 @@ class InterVarsity_Plugin {
 			$term .= '?';
 			// Store term as regex for reuse throughout query
 			// Surround term with word boundaries to match only whole words
-			$term_regex = "\[\[:<:\]\]($term)\[\[:>:\]\]";
+			$term_regex = "\\\\b$term\\\\b";
 			// Extend SQL clause to search across
 			// all small group data for each term
 			$search .= " AND (
